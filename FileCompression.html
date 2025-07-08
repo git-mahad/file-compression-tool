@@ -4,21 +4,89 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Compression Software</title>
+    <title>ZIP File Compression Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>File Compression Tool</h1>
-        <input type="file" id="fileInput" class="form-control">
-        <button id="compressButton" class="btn btn-primary mt-3">Compress</button>
-        <button id="decompressButton" class="btn btn-secondary mt-3" disabled>Decompress</button>
-        <button id="downloadButton" class="btn btn-success mt-3" disabled>Download Compressed File</button>
-        <button id="downloadDecompressedButton" class="btn btn-success mt-3" disabled>Download Decompressed File</button>
-        <div id="output" class="mt-3"></div>
+        <h1>ZIP File Compression Tool</h1>
+        
+        <div class="mode-selector">
+            <button class="mode-btn active" data-mode="compress">Compress</button>
+            <button class="mode-btn" data-mode="decompress">Decompress</button>
+        </div>
+
+        <div id="compressMode">
+            <div class="file-selection-area">
+                <div class="file-input-container">
+                    <input type="file" id="fileInput" class="file-input" multiple>
+                    <label for="fileInput" class="file-input-label" id="fileInputLabel">
+                        Choose files to compress or drag & drop here
+                    </label>
+                </div>
+                
+                <div class="text-center">
+                    <button class="btn btn-custom" id="folderButton">Select Folder</button>
+                    <button class="btn btn-custom btn-danger" id="clearButton" style="display: none;">Clear All</button>
+                </div>
+
+                <div id="filesSelectedInfo" class="files-selected-info" style="display: none;"></div>
+            </div>
+
+            <div class="filename-input" id="filenameInput" style="display: none;">
+                <label for="zipFileName">ZIP File Name:</label>
+                <input type="text" id="zipFileName" placeholder="Enter ZIP file name (without extension)" value="compressed_files">
+            </div>
+
+            <div class="compression-level" id="compressionLevel" style="display: none;">
+                <label>Compression Level:</label>
+                <div class="level-selector">
+                    <button class="level-btn" data-level="1">Fast</button>
+                    <button class="level-btn" data-level="3">Normal</button>
+                    <button class="level-btn active" data-level="6">Balanced</button>
+                    <button class="level-btn" data-level="9">Maximum</button>
+                </div>
+                <small class="text-muted">Higher compression = smaller file but slower processing</small>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-custom" id="compressButton" disabled>Compress to ZIP</button>
+            </div>
+        </div>
+
+        <div id="decompressMode" style="display: none;">
+            <div class="file-input-container">
+                <input type="file" id="zipInput" class="file-input" accept=".zip">
+                <label for="zipInput" class="file-input-label" id="zipInputLabel">
+                    Choose ZIP file to decompress or drag & drop here
+                </label>
+            </div>
+            
+            <div class="alert alert-info" id="decompressInfo" style="display: none;">
+                <strong>Note:</strong> Due to browser security limitations, extracted files will be packaged in a new ZIP file for download. You can also download individual files below.
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-custom" id="decompressButton" disabled>Extract Files</button>
+            </div>
+        </div>
+
+        <div class="progress-container" id="progressContainer">
+            <div class="progress">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <div class="text-center mt-2">
+                <span id="progressText">Processing...</span>
+            </div>
+        </div>
+
+        <div id="output" class="output" style="display: none;"></div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts.js"></script>
+    <script src="./scripts.js"></script>
 </body>
 </html>

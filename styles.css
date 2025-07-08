@@ -1,167 +1,236 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f7fa;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
 .container {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    width: 90%;
-    margin: 1rem auto;
-    transition: transform 0.2s ease;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 50px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
-
-.container:hover {
-    transform: translateY(-2px);
-}
-
 h1 {
-    color: #2c3e50;
-    margin-bottom: 1.5rem;
+    color: #333;
     text-align: center;
-    font-weight: 600;
+    margin-bottom: 30px;
+    font-weight: 700;
 }
-
-.form-control {
-    border: 2px solid #e9ecef;
-    padding: 0.75rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    background-color: #f8f9fa;
+.file-input-container {
+    position: relative;
+    display: inline-block;
     width: 100%;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
-
-.form-control:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+.file-input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
 }
-
-.btn {
-    padding: 0.75rem 1.5rem;
-    font-weight: 500;
-    border-radius: 8px;
+.file-input-label {
+    display: block;
+    padding: 15px 20px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px dashed transparent;
+    min-height: 60px;
 }
-
-.btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+.file-input-label:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
-
-.btn-primary {
-    background-color: #4a90e2;
-    border-color: #4a90e2;
+.file-input-label.dragover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
 }
-
-.btn-primary:hover {
-    background-color: #357abd;
-    border-color: #357abd;
+.btn-custom {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 5px;
 }
-
-.btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(45deg, #764ba2, #667eea);
 }
-
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-.btn:disabled {
+.btn-custom:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none;
 }
-
-#output {
-    padding: 1.5rem;
-    margin-top: 1.5rem;
-    background: linear-gradient(to right, #f8f9fa, #e9ecef);
-    border-radius: 12px;
-    text-align: center;
-    font-weight: 500;
-    color: #2c3e50;
-    border: 1px solid #dee2e6;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+.btn-danger {
+    background: linear-gradient(45deg, #dc3545, #c82333);
 }
-
-.btn-group {
+.btn-danger:hover {
+    background: linear-gradient(45deg, #c82333, #dc3545);
+}
+.progress-container {
+    margin: 20px 0;
+    display: none;
+}
+.progress {
+    height: 20px;
+    border-radius: 10px;
+    background: rgba(102, 126, 234, 0.1);
+}
+.progress-bar {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+.output {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+.file-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 10px;
+}
+.file-item {
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 5px 0;
+    border-radius: 5px;
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
+    justify-content: space-between;
+    align-items: center;
+}
+.file-item .remove-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
-
-/* New animations for interactive elements */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.02); }
-    100% { transform: scale(1); }
+.file-size {
+    font-size: 0.9em;
+    color: #666;
 }
-
-.btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+.compression-stats {
+    background: rgba(118, 75, 162, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
 }
-
-/* Adjust padding and font sizes for mobile */
-@media screen and (max-width: 768px) {
-    body {
-        padding: 10px 0;
-    }
-
-    .container {
-        padding: 1rem;
-        margin: 0.5rem auto;
-    }
-
-    h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .form-control {
-        padding: 0.5rem;
-        font-size: 16px;
-    }
-
-    .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-
-    .btn-group {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    #output {
-        padding: 1rem;
-        margin-top: 1rem;
-        font-size: 0.9rem;
-    }
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
 }
-
-/* Add touch-friendly adjustments */
-@media (hover: none) {
-    .container:hover {
-        transform: none;
-    }
-
-    .btn:hover {
-        transform: none;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+.mode-selector {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.mode-btn {
+    background: rgba(102, 126, 234, 0.1);
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.mode-btn.active {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+.compression-level {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+}
+.level-selector {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.level-btn {
+    padding: 5px 15px;
+    border: 2px solid #667eea;
+    background: transparent;
+    color: #667eea;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9em;
+}
+.level-btn.active {
+    background: #667eea;
+    color: white;
+}
+.filename-input {
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 10px;
+}
+.filename-input input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 2px solid #667eea;
+    border-radius: 5px;
+    background: white;
+}
+.extracted-files {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+.download-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+}
+.alert-warning {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: #ffc107;
+    color: #856404;
+}
+.alert-info {
+    background: rgba(13, 202, 240, 0.1);
+    border-color: #0dcaf0;
+    color: #055160;
+}
+.file-selection-area {
+    margin-bottom: 20px;
+}
+.files-selected-info {
+    background: rgba(102, 126, 234, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
 }
